@@ -3,7 +3,7 @@ import torch
 import boto3
 import os
 
-from transformers import AutoProcessor, WhisperForConditionalGeneration, WhisperConfig
+from transformers import WhisperProcessor, WhisperForConditionalGeneration, WhisperConfig
 from accelerate import init_empty_weights, load_checkpoint_and_dispatch
 import torchaudio
 
@@ -15,7 +15,7 @@ app = Potassium("my_app")
 def init():
 
     config = WhisperConfig.from_pretrained("openai/whisper-base")
-    processor = AutoProcessor.from_pretrained("openai/whisper-base")
+    processor = WhisperProcessor.from_pretrained("openai/whisper-base")
     
     with init_empty_weights():
         model = WhisperForConditionalGeneration(config)
