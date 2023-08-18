@@ -57,14 +57,19 @@ def handler(context: dict, request: Request) -> Response:
     context.get("s3").download_file(context.get("bucket"), path, "sample.wav")
 
     # open the stored file and convert to tensors
+    print('Loading input_features')
     input_features = processor(load_audio("sample.wav"), sampling_rate=16000, return_tensors="pt").input_features.to(device)
 
     # run inference on the sample
     model = context.get("model")
+    print('Generating ids')
     generated_ids = model.generate(inputs=input_features)
     
     # convert the generated ids back to text
+    print('transcribing')
     transcription = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
+
+    print('sending response')
 
     # return output JSON to the client
     return Response(
