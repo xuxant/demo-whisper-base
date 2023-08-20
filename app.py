@@ -18,7 +18,8 @@ def init():
     processor = WhisperProcessor.from_pretrained("openai/whisper-base")
     
     with init_empty_weights():
-        model = WhisperForConditionalGeneration(config)
+        model = WhisperForConditionalGeneration("openai/whisper-base")
+        model.config.forced_decoder_ids = None
     model.tie_weights()
 
     model = load_checkpoint_and_dispatch(
