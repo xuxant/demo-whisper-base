@@ -59,7 +59,7 @@ def handler(context: dict, request: Request) -> Response:
 
     # open the stored file and convert to tensors
     print('Loading input_features')
-    input_features = processor(load_audio("sample.wav"), sampling_rate=16000, return_tensors="pt").input_features.to(device)
+    input_features = processor(load_audio("sample.wav"), sampling_rate=16000, return_tensors="pt").input_features
 
     # run inference on the sample
     model = context.get("model")
